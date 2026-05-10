@@ -8,7 +8,6 @@ esp32:
   framework:
     type: esp-idf
 
-# רכיב ה-API חובה לעבודה עם Voice Assistant
 api:
 
 ota:
@@ -19,11 +18,8 @@ wifi:
     - ssid: "mmmm"
       password: "0545468640"
       priority: 100
-    - ssid: "TP-Link_8453"
-      password: "62449127"
-      priority: 50
 
-# הגדרות אודיו (מיקרופון ורמקול)
+# הגדרות אודיו מה-BIN המקורי
 i2s_audio:
   i2s_lrclk_pin: GPIO3
   i2s_bclk_pin: GPIO2
@@ -41,17 +37,23 @@ speaker:
     i2s_dout_pin: GPIO5
     dac_type: external
 
-# הגדרות מסך SSD1306
+# הגדרות מסך ו-I2C מה-BIN המקורי
 i2c:
-  sda: GPIO8
-  scl: GPIO9
+  sda: GPIO10  # שינוי מ-8 ל-10
+  scl: GPIO8   # שינוי מ-9 ל-8
 
 display:
   - platform: ssd1306_i2c
     model: "SSD1306 128x64"
     address: 0x3C
+    lambda: |-
+      it.print(0, 0, id(font_small), "Shahar AI Ready");
 
-# הגדרת העוזר הקולי
+font:
+  - file: "gfonts://Roboto"
+    id: font_small
+    size: 12
+
 voice_assistant:
   microphone: board_mic
   speaker: board_speaker
