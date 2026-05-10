@@ -10,12 +10,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Build ESPHome Binary
-        uses: esphome/build-action@v2
-        id: esphome-build
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          yaml_file: shahar-ai.yaml
-          version: latest
+          python-version: '3.11'
+
+      - name: Install ESPHome
+        run: pip install esphome
+
+      - name: Build Binary
+        run: esphome compile shahar-ai.yaml
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
