@@ -8,7 +8,9 @@ esp32:
   framework:
     type: esp-idf
 
+# רכיב ה-API חובה לעבודה עם Voice Assistant
 api:
+
 ota:
   - platform: esphome
 
@@ -21,7 +23,7 @@ wifi:
       password: "62449127"
       priority: 50
 
-# הגדרות שמע ללוח YYLX (מיקרופון ורמקול)
+# הגדרות אודיו (מיקרופון ורמקול)
 i2s_audio:
   i2s_lrclk_pin: GPIO3
   i2s_bclk_pin: GPIO2
@@ -39,7 +41,7 @@ speaker:
     i2s_dout_pin: GPIO5
     dac_type: external
 
-# הגדרת המסך שבתמונה
+# הגדרות מסך SSD1306
 i2c:
   sda: GPIO8
   scl: GPIO9
@@ -49,6 +51,7 @@ display:
     model: "SSD1306 128x64"
     address: 0x3C
 
+# הגדרת העוזר הקולי
 voice_assistant:
   microphone: board_mic
   speaker: board_speaker
