@@ -17,11 +17,7 @@ jobs:
         run: |
           BUILD_DIR=".esphome/build/shahar-ai"
           python -m esptool --chip esp32c3 merge-bin -o merged_shahar.bin \
-            --flash_mode dio --flash_freq 40m --flash_size 4MB \
-            0x0 $BUILD_DIR/.pioenvs/shahar-ai/bootloader.bin \
-            0x8000 $BUILD_DIR/.pioenvs/shahar-ai/partitions.bin \
-            0x10000 $BUILD_DIR/.pioenvs/shahar-ai/firmware.bin \
-            0xe000 $BUILD_DIR/.pioenvs/shahar-ai/ota_data_initial.bin
+            @$BUILD_DIR/flashing_args
       - uses: actions/upload-artifact@v4
         with:
           name: full-firmware
