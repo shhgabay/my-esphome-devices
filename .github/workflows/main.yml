@@ -21,8 +21,13 @@ jobs:
       - name: Build Binary
         run: esphome compile shahar-ai.yaml
 
+      - name: Create Merged Binary
+        run: |
+          # פקודה שיוצרת קובץ אחד שכולל בוטלואדר ומחיצות
+          python -m esptool --chip esp32c3 merge_bin -o merged_shahar.bin @.esphome/build/shahar-ai/.pioenvs/shahar-ai/flash_args
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: firmware
-          path: .esphome/build/shahar-ai/.pioenvs/shahar-ai/firmware.bin
+          name: full-firmware
+          path: merged_shahar.bin
