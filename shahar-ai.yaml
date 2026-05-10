@@ -5,12 +5,11 @@ esp32:
   board: esp32-c3-devkitm-1
   variant: esp32c3
   framework:
-    type: esp-idf
+    type: arduino # זה השינוי המרכזי
 
-# הגדרת לוגר ל-UART כדי לראות משהו ב-USB
+# לוגר פשוט כדי לוודא תגובה
 logger:
-  hardware_uart: UART0
-  level: DEBUG
+  baud_rate: 115200
 
 wifi:
   networks:
