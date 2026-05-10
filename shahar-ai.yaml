@@ -1,0 +1,54 @@
+esphome:
+  name: "shahar-ai"
+  friendly_name: "עוזר קולי שחר"
+
+esp32:
+  board: esp32-c3-devkitm-1
+  variant: esp32c3
+  framework:
+    type: esp-idf
+
+api:
+ota:
+  - platform: esphome
+
+wifi:
+  networks:
+    - ssid: "mmmm"
+      password: "0545468640"
+      priority: 100
+    - ssid: "TP-Link_8453"
+      password: "62449127"
+      priority: 50
+
+# הגדרות שמע ללוח YYLX (מיקרופון ורמקול)
+i2s_audio:
+  i2s_lrclk_pin: GPIO3
+  i2s_bclk_pin: GPIO2
+
+microphone:
+  - platform: i2s_audio
+    id: board_mic
+    i2s_din_pin: GPIO4
+    adc_type: external
+    pdm: false
+
+speaker:
+  - platform: i2s_audio
+    id: board_speaker
+    i2s_dout_pin: GPIO5
+    dac_type: external
+
+# הגדרת המסך שבתמונה
+i2c:
+  sda: GPIO8
+  scl: GPIO9
+
+display:
+  - platform: ssd1306_i2c
+    model: "SSD1306 128x64"
+    address: 0x3C
+
+voice_assistant:
+  microphone: board_mic
+  speaker: board_speaker
