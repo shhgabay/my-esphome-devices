@@ -7,15 +7,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      
-      - name: Build Binary
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Build ESPHome Binary
         uses: esphome/build-action@v2
         id: esphome-build
         with:
           yaml_file: shahar-ai.yaml
           version: latest
-          
+
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
