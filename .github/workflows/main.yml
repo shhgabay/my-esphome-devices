@@ -1,4 +1,4 @@
-name: Build ESPHome BIN
+name: Build ESPHome
 
 on:
   workflow_dispatch:
@@ -9,19 +9,15 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       
-      - name: Cache ESPHome
-        uses: actions/cache@v4 # זה התיקון לשגיאה שראינו בצילום המסך
-        with:
-          path: ~/.esphome
-          key: esphome-cache
-
-      - uses: esphome/build-action@v2
+      - name: Build Binary
+        uses: esphome/build-action@v2
         id: esphome-build
         with:
           yaml_file: shahar-ai.yaml
           version: latest
           
-      - uses: actions/upload-artifact@v4
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
         with:
           name: firmware
-          path: ${{ steps.esphome-build.outputs.name }}
+          path: .esphome/build/shahar-ai/.pioenvs/shahar-ai/firmware.bin
