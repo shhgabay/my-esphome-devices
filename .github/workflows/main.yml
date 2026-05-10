@@ -15,9 +15,17 @@ jobs:
       - run: esphome compile shahar-ai.yaml
       - name: Create Merged Binary
         run: |
-          BUILD_DIR=".esphome/build/shahar-ai"
-          python -m esptool --chip esp32c3 merge-bin -o merged_shahar.bin \
-            @$BUILD_DIR/flashing_args
+          # מוצא את קובץ ה-args בכל מקום שהוא נמצא בו
+          FLASH_ARGS=$(find . -name "*flash*_args" | head -n 1)
+          echo "Found args file at: $FLASH_ARGS"
+          
+          # עובר לתיקייה שבה נמצא הקובץ כדי שהנתיבים היחסיים בתוכו יעבדו
+          WORKDIR=$(dirname $FLASH_ARGS)
+          FILENAME=$(basename $FLASH_ARGS)
+          
+          cd $WORKDIR
+          python -m esptool --chip esp32c3 merge-bin -o ../../../merged_shahar.bin @$FILENAME
+
       - uses: actions/upload-artifact@v4
         with:
           name: full-firmware
