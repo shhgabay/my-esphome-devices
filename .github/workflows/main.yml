@@ -23,10 +23,14 @@ jobs:
 
       - name: Create Merged Binary
         run: |
-          # מחפש את קובץ ה-args בתוך תיקיית ה-build ויוצר קובץ ממוזג
-          cd .esphome/build/shahar-ai
-          ARGS_FILE=$(ls *flash_args | head -n 1)
-          python -m esptool --chip esp32c3 merge-bin -o ../../../merged_shahar.bin @$ARGS_FILE
+          # בניית פקודת המיזוג ידנית לפי הסטנדרט של ESP32-C3
+          BUILD_DIR=".esphome/build/shahar-ai"
+          python -m esptool --chip esp32c3 merge-bin -o merged_shahar.bin \
+            --flash_mode dio --flash_size 4MB --flash_freq 40m \
+            0x0 $BUILD_DIR/.pioenvs/shahar-ai/bootloader.bin \
+            0x8000 $BUILD_DIR/.pioenvs/shahar-ai/partitions.bin \
+            0x10000 $BUILD_DIR/.pioenvs/shahar-ai/firmware.bin \
+            0xe000 $BUILD_DIR/.pioenvs/shahar-ai/ota_data_initial.bin
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
