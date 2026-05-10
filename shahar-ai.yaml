@@ -6,22 +6,11 @@ esp32:
   variant: esp32c3
   framework:
     type: esp-idf
-    sdkconfig_options:
-      CONFIG_ESP32C3_UNIVERSAL_MAC_ADDRESSES_FOUR: y
-      CONFIG_ESP_CONSOLE_UART_DEFAULT: y
 
-# ביטול מצב חיסכון בחשמל שיכול לתקוע את ה-C3
-power_supply:
-  - id: pwr
-    pin: GPIO11 # פין דמיוני רק כדי להפעיל את הרכיב
-
+# הגדרת לוגר ל-UART כדי לראות משהו ב-USB
 logger:
-  level: VERY_VERBOSE # אנחנו רוצים לראות הכל ב-Logs
   hardware_uart: UART0
-
-api:
-ota:
-  - platform: esphome
+  level: DEBUG
 
 wifi:
   networks:
