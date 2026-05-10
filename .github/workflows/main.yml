@@ -15,16 +15,17 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Install ESPHome
-        run: pip install esphome
+      - name: Install ESPHome and esptool
+        run: pip install esphome esptool
 
       - name: Build Binary
         run: esphome compile shahar-ai.yaml
 
       - name: Create Merged Binary
         run: |
-          # פקודה שיוצרת קובץ אחד שכולל בוטלואדר ומחיצות
-          python -m esptool --chip esp32c3 merge_bin -o merged_shahar.bin @.esphome/build/shahar-ai/.pioenvs/shahar-ai/flash_args
+          # שימוש ב-flash_args כדי למצוא את כל הנתיבים והכתובות אוטומטית
+          cd .esphome/build/shahar-ai
+          python -m esptool --chip esp32c3 merge-bin -o ../../../merged_shahar.bin @flashing_args
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
